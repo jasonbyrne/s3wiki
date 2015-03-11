@@ -4,15 +4,16 @@
  */
 
 
-var restify = require('restify'),
+var webRoot = './public',
+    restify = require('restify'),
     fs = require('fs'),
     serveStatic = require('node-static'),
-    staticFile = new serveStatic.Server('./public'),
+    staticFile = new(static.Server)(webRoot),
     config = {};
 
 
 // Load config file
-fs.readFile('../config/settings.json', 'utf8', function(err, data) {
+fs.readFile('./config/settings.json', 'utf8', function(err, data) {
     if (!err) {
         config = JSON.parse(data);
     }
@@ -52,7 +53,17 @@ server.get('/hello/:name', respond);
 
 // Fallback for everything is local static file
 server.get(/.*/, function (req, res) {
-    staticFile.serve(req, res);
+    staticFile.serve(req, res, function(err, result) {
+        if (err) {
+            console.error('Error serving %s - %s', req.url, err.message);
+            res.writeHead(err.status, err.headers);
+            res.write(err.status);
+            res.end();
+        }
+        else {
+            console.log('%s - %s', req.url, res.message);
+        }
+    });
 });
 
 server.listen((process.env.PORT || 80), function() {
