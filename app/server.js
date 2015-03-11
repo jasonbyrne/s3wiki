@@ -5,8 +5,16 @@
 
 
 var restify = require('restify'),
-    fs = require('fs');
+    fs = require('fs'),
+    config = {};
 
+
+// Load config file
+fs.readFile('../config/settings.json', 'utf8', function(err, data) {
+    if (!err) {
+        config = JSON.parse(data);
+    }
+});
 
 var sendFile = function(req, res, next) {
     var filePath = req.params.name;

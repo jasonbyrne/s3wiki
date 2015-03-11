@@ -1,0 +1,12 @@
+{
+    "s3": {
+        "accessKey": "",
+        "secretKey": "",
+        "bucketName": ""
+    },
+    "redis": {
+        "host": "",
+        "port": "",
+        "keyPrefix": ""
+    }
+}
