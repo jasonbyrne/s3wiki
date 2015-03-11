@@ -49,7 +49,8 @@ server.pre(restify.pre.sanitizePath());
 server.get('/hello/:name', respond);
 
 // Fallback for everything is local static file
-server.get(/\.*/, restify.serveStatic({
+
+server.get(/.*/, restify.serveStatic({
     directory: '../public',
     default: 'index.html'
 }));
