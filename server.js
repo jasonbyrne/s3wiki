@@ -51,7 +51,7 @@ server.get('/hello/:name', respond);
 // Fallback for everything is local static file
 
 server.get(/.*/, restify.serveStatic({
-    directory: '../public',
+    directory: './public',
     default: 'index.html'
 }));
 
