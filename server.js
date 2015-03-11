@@ -7,7 +7,7 @@
 var restify = require('restify'),
     fs = require('fs'),
     serveStatic = require('node-static'),
-    staticFile = new(serveStatic.Server)('./public'),
+    staticFile = new serveStatic.Server('./public'),
     config = {};
 
 
