@@ -7,6 +7,7 @@
 var publicFolder = '/public',
     restify = require('restify'),
     fs = require('fs'),
+    mime = require('mime'),
     config = {};
 
 
@@ -36,10 +37,16 @@ var sendStatic = function(req, res, next) {
     var filePath = __dirname + publicFolder + req.url;
     fs.readFile(filePath, 'utf8', function(err, data) {
         if (err) {
-            res.send("File Not Found: " + filePath);
+            res.writeHead(404);
+            res.end("File Not Found: " + req.url);
+            next(err);
+            return null;
         }
         else {
-            res.send(data);
+            res.contentType = mime.lookup(filePath);
+            res.writeHead(200);
+            res.end(data);
+            return next();
         }
     });
 };
