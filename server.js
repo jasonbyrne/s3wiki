@@ -4,7 +4,7 @@
  */
 
 
-var publicFolder = 'public',
+var publicFolder = '/public',
     restify = require('restify'),
     fs = require('fs'),
     config = {};
