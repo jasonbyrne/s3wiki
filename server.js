@@ -33,10 +33,10 @@ var sendFile = function(req, res, next) {
 };
 
 var sendStatic = function(req, res, next) {
-    var filePath = req.params.name;
+    var filePath = req.path;
     fs.readFile(webRoot + filePath, 'utf8', function(err, data) {
         if (err) {
-            res.send("File Not Found");
+            res.send("File Not Found: " + filePath);
         }
         else {
             res.send(data);
