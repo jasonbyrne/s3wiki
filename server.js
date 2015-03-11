@@ -6,6 +6,8 @@
 
 var restify = require('restify'),
     fs = require('fs'),
+    serveStatic = require('node-static'),
+    staticFile = new(serveStatic.Server)('./public'),
     config = {};
 
 
@@ -49,11 +51,9 @@ server.pre(restify.pre.sanitizePath());
 server.get('/hello/:name', respond);
 
 // Fallback for everything is local static file
-
-server.get(/.*/, restify.serveStatic({
-    directory: './public',
-    default: 'index.html'
-}));
+server.get(/.*/, function (req, res) {
+    staticFile.serve(req, res);
+});
 
 server.listen((process.env.PORT || 80), function() {
     console.log('%s listening at %s', server.name, server.url);
